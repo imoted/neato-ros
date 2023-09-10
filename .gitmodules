@@ -1,4 +1,4 @@
 
 [submodule "neato/src/neato_driver_python"]
 	path = neato/src/neato_driver_python
-	url = https://github.com/brannonvann/neato-driver-python.git
+	url = https://github.com/imoted/neato-driver-python.git
