@@ -1,3 +1,8 @@
+## note
+
+* change the sensor msgs and parse method for Botvac Dseries
+* add rviz config
+
 # neato-ros
 
 Turn your neato vacuum into a ROS robot using a Raspberry Pi. This project contains the code and instructions to run ROS the Raspberry Pi, setup ROS, and install the ROS node to control the Neato robotic vacuum. 

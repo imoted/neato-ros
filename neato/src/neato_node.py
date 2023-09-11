@@ -177,8 +177,8 @@ def main():
 def init_neato():
     robot.init(port, debug_neato_driver)
     robot.TestMode(True)
-    robot.PlaySound(robot.Sounds.WakingUp)
-    time.sleep(3)
+    # robot.PlaySound(robot.Sounds.WakingUp)
+    # time.sleep(3)
     robot.SetLED(robot.BacklightStatus.On, robot.ButtonColors.Green)
 
 
@@ -367,27 +367,27 @@ def pub_sensors():
 
     # some neatos supply additional fields. this is the common set from my testing.
     analog_keys = [
-        "WallSensorInMM",
-        "BatteryVoltageInmV",
-        "LeftDropInMM",
-        "RightDropInMM",
-        "LeftMagSensor",
-        "RightMagSensor",
-        "UIButtonInmV",
-        "VacuumCurrentInmA",
-        "ChargeVoltInmV",
-        "BatteryTemp0InC",
-        "BatteryTemp1InC",
-        "CurrentInmA",
-        "SideBrushCurrentInmA",
-        "VoltageReferenceInmV",
-        "AccelXInmG",
-        "AccelYInmG",
-        "AccelZInmG",
+        "BatteryVoltagemV",
+        "BatteryCurrentmA",
+        "BatteryTemperaturemC",
+        "ExternalVoltagemV",
+        "AccelerometerXmG",
+        "AccelerometerYmG",
+        "AccelerometerZmG",
+        "VacuumCurrentmA",
+        "SideBrushCurrentmA",
+        "MagSensorLeftVAL",
+        "MagSensorRightVAL",
+        "WallSensormm",
+        "DropSensorLeftmm",
+        "DropSensorRightmm"
     ]
 
     for key in analog_keys:
-        setattr(sensors, key, analog_sensors[key])
+        try:
+            setattr(sensors, key, analog_sensors[key])
+        except KeyError:
+            pass
 
     for key, value in digital_sensors_prev.items():
         setattr(sensors, key, value)
@@ -481,9 +481,9 @@ def pub_battery():
     battery_state.present = charger["FuelPercent"] > 0
 
     if analog_sensors_prev:
-        battery_state.voltage = analog_sensors_prev["BatteryVoltageInmV"] // 1000
-        battery_state.temperature = analog_sensors_prev["BatteryTemp0InC"]
-        battery_state.current = analog_sensors_prev["CurrentInmA"] // 1000
+        battery_state.voltage = analog_sensors_prev["BatteryVoltagemV"] // 1000
+        battery_state.temperature = analog_sensors_prev["BatteryTemperaturemC"]
+        battery_state.current = analog_sensors_prev["BatteryCurrentmA"] // 1000
 
     battery_pub.publish(battery_state)
 
